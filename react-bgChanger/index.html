@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src='react/build/react.js'></script>
+    <script src='react/build/react-dom.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+  </head>
+  <body>
+    <div id="container">
+    </div>
+    <script type="text/babel">
+    var App = React.createClass({
+      getInitialState: function(){
+        return {
+          bgColor: "teal"
+        }
+      },
+      changeColor: function(color){
+        this.setState({
+          bgColor: color
+        })
+      },
+      setBgColor: function(){
+        document.querySelector("body").style.background=this.state.bgColor
+      },
+      componentDidMount: function(){
+        this.setBgColor()
+      },
+      componentDidUpdate: function(){
+        this.setBgColor()
+      },
+      render: function(){
+        return (
+          <div>
+          <h3>Hello,World!</h3>
+          <label>What color?<ColorPicker value={this.state.bgColor} onColorChange={this.changeColor}/></label>
+          </div>
+        )
+      }
+    });
+    var ColorPicker = React.createClass({
+     handleChange: function(e){
+        var color = e.target.value;
+        if(this.props.onColorChange){
+          this.props.onColorChange(color)
+        }
+      },
+      render: function(){
+        return (<select value={this.props.value} onChange={this.handleChange}>
+        <option value="teal">teal</option>
+        <option value="orange">orange</option>
+        <option value="tomato">tomato</option>
+        </select>)
+      }
+    });
+    ReactDOM.render(
+      <App/>,
+      document.getElementById('container')
+    )
+    </script>
+  </body>
+</html>
